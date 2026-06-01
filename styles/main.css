@@ -284,6 +284,14 @@ button.secondary:hover {
   background: #eff6ff;
 }
 
+button.danger {
+  background: var(--error);
+}
+
+button.danger:hover {
+  background: #8f1d14;
+}
+
 button:disabled {
   opacity: 0.55;
   cursor: not-allowed;

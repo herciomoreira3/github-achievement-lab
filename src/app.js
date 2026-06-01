@@ -38,6 +38,7 @@
     setGameStatus("idle");
 
     elements.startButton.addEventListener("click", startGame);
+    elements.stopButton.addEventListener("click", stopGame);
     elements.restartButton.addEventListener("click", restartGame);
     elements.durationSelect.addEventListener("change", handleDurationChange);
     elements.languageSelect.addEventListener("change", handlePromptSettingChange);
@@ -60,6 +61,7 @@
     elements.sourceSelect = document.getElementById("sourceSelect");
     elements.durationSelect = document.getElementById("durationSelect");
     elements.startButton = document.getElementById("startButton");
+    elements.stopButton = document.getElementById("stopButton");
     elements.restartButton = document.getElementById("restartButton");
     elements.resultPanel = document.getElementById("resultPanel");
     elements.resultMessage = document.getElementById("resultMessage");
@@ -101,6 +103,7 @@
 
   async function loadNextPrompt() {
     elements.startButton.disabled = true;
+    elements.stopButton.disabled = true;
     elements.restartButton.disabled = true;
     elements.promptDisplay.textContent = "Loading random prompt...";
     state.language = elements.languageSelect.value;
@@ -114,6 +117,7 @@
     state.targetText = prompt.text;
     state.promptSource = prompt.source;
     elements.startButton.disabled = false;
+    elements.stopButton.disabled = true;
     elements.restartButton.disabled = false;
   }
 
@@ -136,6 +140,14 @@
     state.startedAt = Date.now();
     state.timerId = window.setInterval(tickTimer, 200);
     elements.typingInput.focus();
+  }
+
+  function stopGame() {
+    if (state.status !== "running") {
+      return;
+    }
+
+    finishGame("stopped");
   }
 
   async function resetRace() {
@@ -272,14 +284,15 @@
       date: new Date().toISOString()
     };
 
-    const hasNewHighScore = storage.isNewHighScore(score, state.highScore);
+    const canSaveHighScore = reason !== "stopped";
+    const hasNewHighScore = canSaveHighScore && storage.isNewHighScore(score, state.highScore);
     if (hasNewHighScore) {
       storage.saveHighScore(score);
       state.highScore = score;
       renderHighScore();
     }
 
-    renderResult(hasNewHighScore);
+    renderResult(hasNewHighScore, reason);
   }
 
   function clearTimer() {
@@ -329,8 +342,13 @@
     elements.highScoreText.textContent = `${state.highScore.wpm} WPM at ${state.highScore.accuracy}% accuracy`;
   }
 
-  function renderResult(hasNewHighScore) {
-    elements.resultMessage.textContent = hasNewHighScore ? "New high score!" : "Review your result below.";
+  function renderResult(hasNewHighScore, reason) {
+    if (reason === "stopped") {
+      elements.resultMessage.textContent = "Race stopped. This result is not saved as a high score.";
+    } else {
+      elements.resultMessage.textContent = hasNewHighScore ? "New high score!" : "Review your result below.";
+    }
+
     elements.resultWpm.textContent = String(state.wpm);
     elements.resultAccuracy.textContent = `${state.accuracy}%`;
     elements.resultCorrect.textContent = String(state.correctCount);
@@ -346,6 +364,8 @@
     if (status === "idle") {
       elements.typingInput.disabled = true;
       elements.startButton.disabled = false;
+      elements.stopButton.disabled = true;
+      elements.stopButton.hidden = true;
       elements.restartButton.disabled = false;
       elements.durationSelect.disabled = false;
       elements.languageSelect.disabled = false;
@@ -356,6 +376,8 @@
     if (status === "running") {
       elements.typingInput.disabled = false;
       elements.startButton.disabled = true;
+      elements.stopButton.disabled = false;
+      elements.stopButton.hidden = false;
       elements.restartButton.disabled = false;
       elements.durationSelect.disabled = true;
       elements.languageSelect.disabled = true;
@@ -366,6 +388,8 @@
     if (status === "finished") {
       elements.typingInput.disabled = true;
       elements.startButton.disabled = false;
+      elements.stopButton.disabled = true;
+      elements.stopButton.hidden = true;
       elements.restartButton.disabled = false;
       elements.durationSelect.disabled = false;
       elements.languageSelect.disabled = false;
