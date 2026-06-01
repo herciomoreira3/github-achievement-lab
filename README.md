@@ -1,6 +1,6 @@
 # github-achievement-lab
 
-Repo latihan untuk belajar workflow GitHub issue, branch, pull request, dan merge.
+Repo latihan untuk belajar workflow GitHub issue, branch, pull request, dan merge dengan perubahan kecil yang tetap bermakna.
 
 ## Purpose
 
