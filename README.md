@@ -4,6 +4,12 @@
 
 Henrique Rapido mak aplikasaun web simples ne'ebe harii ho HTML, CSS, no JavaScript vanilla. Jogu ida-ne'e ajuda utilizador treina typing ho prompt random, suporta lian English, Indonesia, no Tetun, hatudu WPM no akurasia iha tempu real, no rai high score lokal iha browser.
 
+Asesu online:
+
+```text
+https://herciomoreira3.github.io/Henrique-Rapido/
+```
+
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript_ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
@@ -49,6 +55,7 @@ Projetu ida-ne'e la presiza backend, login, database, ka framework. Aplikasaun b
 ### Type Race
 
 - Hahu race ho butaun `Start`.
+- Uza butaun `Stop` atu para race ne'ebe sedang la'o.
 - Restart race iha tempu running ka depois race remata.
 - Timer suporta durasaun `30s`, `60s`, no `120s`.
 - Race remata bainhira tempu hotu ka utilizador kompleta prompt.
@@ -175,8 +182,9 @@ http://localhost:8080
 4. Klik `Start`.
 5. Hakerek prompt ne'ebe mosu iha layar.
 6. Haree WPM, akurasia, no progress durante race.
-7. Bainhira race remata, haree rezultadu ikus.
-8. Klik `Restart` atu hahu race foun.
+7. Klik `Stop` se hakarak para race molok tempu hotu.
+8. Bainhira race remata, haree rezultadu ikus.
+9. Klik `Restart` atu hahu race foun.
 
 ## Konfigurasaun Lian no Fonte
 
