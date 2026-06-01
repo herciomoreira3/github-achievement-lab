@@ -151,6 +151,23 @@ h1 {
   padding: 22px;
 }
 
+.prompt-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.prompt-meta span {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 10px;
+  color: var(--muted);
+  background: #fbfdff;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
 .prompt-text {
   min-height: 120px;
   margin: 0;
@@ -217,11 +234,13 @@ textarea:disabled {
 
 .controls {
   display: flex;
+  flex-wrap: wrap;
   align-items: end;
   gap: 12px;
   padding: 16px;
 }
 
+.select-control,
 .duration-control {
   display: grid;
   gap: 8px;

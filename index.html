@@ -46,6 +46,10 @@
         </section>
 
         <section class="prompt-panel" aria-label="Text prompt">
+          <div class="prompt-meta">
+            <span id="languageBadge">English</span>
+            <span id="sourceBadge">Local prompt</span>
+          </div>
           <p id="promptDisplay" class="prompt-text"></p>
         </section>
 
@@ -55,6 +59,21 @@
         </section>
 
         <section class="controls" aria-label="Race controls">
+          <label class="select-control" for="languageSelect">
+            <span>Language</span>
+            <select id="languageSelect">
+              <option value="en" selected>English</option>
+              <option value="id">Indonesia</option>
+              <option value="tet">Tetun</option>
+            </select>
+          </label>
+          <label class="select-control" for="sourceSelect">
+            <span>Source</span>
+            <select id="sourceSelect">
+              <option value="local" selected>Local random</option>
+              <option value="internet">Internet random</option>
+            </select>
+          </label>
           <label class="duration-control" for="durationSelect">
             <span>Duration</span>
             <select id="durationSelect">

@@ -5,6 +5,9 @@ Henrique Rapido adalah game Type Race berbasis JavaScript vanilla untuk melatih 
 ## Features
 
 - Random typing prompt.
+- Language options for English, Indonesia, and Tetun.
+- Local prompt generator with unique word combinations.
+- Optional internet random prompts from Wikipedia summaries with local fallback.
 - Real-time WPM, accuracy, progress, correct count, and incorrect count.
 - Character highlighting for correct, incorrect, current, and neutral characters.
 - Duration options: 30, 60, and 120 seconds.

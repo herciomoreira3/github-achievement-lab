@@ -153,7 +153,11 @@ Requirement:
 
 - Minimal tersedia 5 teks latihan.
 - Teks dipilih secara random saat game dimulai.
-- Teks harus berupa kalimat bahasa Inggris atau Indonesia yang mudah diketik.
+- Teks mendukung bahasa English, Indonesia, dan Tetun.
+- Teks lokal dibuat dari kombinasi word bank agar variasinya lebih luas.
+- Teks internet diambil dari random Wikipedia summary sesuai bahasa jika tersedia.
+- Jika source internet gagal, game wajib fallback ke prompt lokal.
+- Teks harus berupa kalimat yang mudah diketik.
 - Teks tidak boleh terlalu pendek.
 - Panjang target per teks: 180 sampai 350 karakter.
 

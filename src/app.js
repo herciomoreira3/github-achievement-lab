@@ -1,5 +1,5 @@
 (function () {
-  const texts = window.TYPE_RACE_TEXTS || [];
+  const prompts = window.TypeRacePrompts;
   const storage = window.TypeRaceStorage;
 
   const state = {
@@ -17,17 +17,21 @@
     accuracy: 100,
     progress: 0,
     highScore: null,
-    lastTextIndex: -1
+    language: "en",
+    source: "local",
+    promptSource: "Local prompt"
   };
 
   const elements = {};
 
   document.addEventListener("DOMContentLoaded", initApp);
 
-  function initApp() {
+  async function initApp() {
     bindElements();
     state.highScore = storage.loadHighScore();
-    state.targetText = selectRandomText();
+    state.language = elements.languageSelect.value;
+    state.source = elements.sourceSelect.value;
+    await loadNextPrompt();
     renderTargetText();
     renderStats();
     renderHighScore();
@@ -36,6 +40,8 @@
     elements.startButton.addEventListener("click", startGame);
     elements.restartButton.addEventListener("click", restartGame);
     elements.durationSelect.addEventListener("change", handleDurationChange);
+    elements.languageSelect.addEventListener("change", handlePromptSettingChange);
+    elements.sourceSelect.addEventListener("change", handlePromptSettingChange);
     elements.typingInput.addEventListener("input", handleTypingInput);
     elements.typingInput.addEventListener("paste", preventPaste);
   }
@@ -47,7 +53,11 @@
     elements.progressValue = document.getElementById("progressValue");
     elements.progressBar = document.getElementById("progressBar");
     elements.promptDisplay = document.getElementById("promptDisplay");
+    elements.languageBadge = document.getElementById("languageBadge");
+    elements.sourceBadge = document.getElementById("sourceBadge");
     elements.typingInput = document.getElementById("typingInput");
+    elements.languageSelect = document.getElementById("languageSelect");
+    elements.sourceSelect = document.getElementById("sourceSelect");
     elements.durationSelect = document.getElementById("durationSelect");
     elements.startButton = document.getElementById("startButton");
     elements.restartButton = document.getElementById("restartButton");
@@ -73,48 +83,63 @@
     renderStats();
   }
 
-  function selectRandomText() {
-    if (texts.length === 0) {
-      return "Type Race needs at least one prompt before the game can begin.";
+  async function handlePromptSettingChange() {
+    if (state.status === "running") {
+      elements.languageSelect.value = state.language;
+      elements.sourceSelect.value = state.source;
+      return;
     }
 
-    if (texts.length === 1) {
-      state.lastTextIndex = 0;
-      return texts[0];
-    }
-
-    let nextIndex = Math.floor(Math.random() * texts.length);
-    while (nextIndex === state.lastTextIndex) {
-      nextIndex = Math.floor(Math.random() * texts.length);
-    }
-
-    state.lastTextIndex = nextIndex;
-    return texts[nextIndex];
+    state.language = elements.languageSelect.value;
+    state.source = elements.sourceSelect.value;
+    await loadNextPrompt();
+    state.typedText = "";
+    elements.typingInput.value = "";
+    elements.resultPanel.hidden = true;
+    renderTargetText();
   }
 
-  function startGame() {
+  async function loadNextPrompt() {
+    elements.startButton.disabled = true;
+    elements.restartButton.disabled = true;
+    elements.promptDisplay.textContent = "Loading random prompt...";
+    state.language = elements.languageSelect.value;
+    state.source = elements.sourceSelect.value;
+
+    const prompt = await prompts.getPrompt({
+      language: state.language,
+      source: state.source
+    });
+
+    state.targetText = prompt.text;
+    state.promptSource = prompt.source;
+    elements.startButton.disabled = false;
+    elements.restartButton.disabled = false;
+  }
+
+  async function startGame() {
     if (state.status === "running") {
       return;
     }
 
-    resetRace();
+    await resetRace();
     setGameStatus("running");
     state.startedAt = Date.now();
     state.timerId = window.setInterval(tickTimer, 200);
     elements.typingInput.focus();
   }
 
-  function restartGame() {
+  async function restartGame() {
     clearTimer();
-    resetRace();
+    await resetRace();
     setGameStatus("running");
     state.startedAt = Date.now();
     state.timerId = window.setInterval(tickTimer, 200);
     elements.typingInput.focus();
   }
 
-  function resetRace() {
-    state.targetText = selectRandomText();
+  async function resetRace() {
+    await loadNextPrompt();
     state.typedText = "";
     state.duration = Number(elements.durationSelect.value);
     state.timeLeft = state.duration;
@@ -283,6 +308,8 @@
     }
 
     elements.promptDisplay.replaceChildren(fragment);
+    elements.languageBadge.textContent = prompts.getLanguageLabel(state.language);
+    elements.sourceBadge.textContent = state.promptSource;
   }
 
   function renderStats() {
@@ -321,6 +348,8 @@
       elements.startButton.disabled = false;
       elements.restartButton.disabled = false;
       elements.durationSelect.disabled = false;
+      elements.languageSelect.disabled = false;
+      elements.sourceSelect.disabled = false;
       elements.typingInput.placeholder = "Press Start to begin";
     }
 
@@ -329,6 +358,8 @@
       elements.startButton.disabled = true;
       elements.restartButton.disabled = false;
       elements.durationSelect.disabled = true;
+      elements.languageSelect.disabled = true;
+      elements.sourceSelect.disabled = true;
       elements.typingInput.placeholder = "Start typing the prompt";
     }
 
@@ -337,6 +368,8 @@
       elements.startButton.disabled = false;
       elements.restartButton.disabled = false;
       elements.durationSelect.disabled = false;
+      elements.languageSelect.disabled = false;
+      elements.sourceSelect.disabled = false;
       elements.typingInput.placeholder = "Race complete";
     }
 
