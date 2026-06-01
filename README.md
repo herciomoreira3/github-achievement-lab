@@ -18,3 +18,9 @@ Fase awal project berfokus pada workflow dasar yang mendukung tiga achievement:
 - Quickdraw
 - Pull Shark
 - YOLO
+
+## Goals
+
+- Menjaga setiap perubahan tetap kecil dan mudah direview.
+- Membiasakan penggunaan issue dan pull request untuk semua update.
+- Menyimpan contoh workflow yang bisa diulang tanpa membuat aktivitas spam.
