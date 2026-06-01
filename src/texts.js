@@ -48,12 +48,41 @@
     return items[Math.floor(Math.random() * items.length)];
   }
 
-  function normalizePrompt(text) {
+  function stripDiacritics(text) {
     return text
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/Đ/g, "D")
+      .replace(/đ/g, "d");
+  }
+
+  function normalizePrompt(text) {
+    const cleanText = stripDiacritics(text)
+      .replace(/\[[^\]]*\]/g, " ")
+      .replace(/\([^)]{0,120}\)/g, " ")
+      .replace(/https?:\/\/\S+/gi, " ")
+      .replace(/\b(?:[a-z]{2,}\.)+[a-z]{2,}\b/gi, " ")
+      .replace(/&[a-z]+;/gi, " ")
+      .replace(/[0-9]+/g, " ")
+      .replace(/[;:!?]+/g, ".")
+      .replace(/[\u2018\u2019\u201c\u201d"'`´]/g, "")
+      .replace(/[-–—_/\\|]+/g, " ")
+      .replace(/[^A-Za-z.,\s]/g, " ")
+      .replace(/\s+([,.])/g, "$1")
       .replace(/\s+/g, " ")
-      .replace(/\[[^\]]*\]/g, "")
-      .replace(/\([^)]{0,80}\)/g, "")
+      .replace(/\s*,\s*/g, ", ")
+      .replace(/\s*\.\s*/g, ". ")
+      .replace(/(?:[,.]\s*){2,}/g, ". ")
+      .replace(/,{2,}/g, ",")
+      .replace(/\.{2,}/g, ".")
+      .replace(/^[,.\s]+|[,.\s]+$/g, "")
       .trim();
+
+    if (!cleanText) {
+      return "";
+    }
+
+    return cleanText.endsWith(".") ? cleanText : `${cleanText}.`;
   }
 
   function clampPrompt(text) {
@@ -84,10 +113,10 @@
 
     const prompt = `${sentence}. ${randomItem(bank.endings)}`;
     if (prompt.length < 180) {
-      return `${prompt} ${randomItem(bank.fallbacks)}`;
+      return clampPrompt(`${prompt} ${randomItem(bank.fallbacks)}`);
     }
 
-    return prompt;
+    return clampPrompt(prompt);
   }
 
   async function fetchInternetPrompt(language) {

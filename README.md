@@ -65,6 +65,8 @@ Projetu ida-ne'e la presiza backend, login, database, ka framework. Aplikasaun b
   - `id.wikipedia.org`
   - `tet.wikipedia.org`
 - Se internet/API falla, sistema fallback ba prompt lokal.
+- Prompt hotu mosu iha forma simples: huruf biasa, espasu, koma, no pontu de'it.
+- Sistema hamoos numeru, simbolu, dash, apostrophe, no letra ho sinal iha leten atu typing la sai todan.
 
 ### Estatistika Real-time
 
