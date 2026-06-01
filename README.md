@@ -1,26 +1,36 @@
-# github-achievement-lab
+# Henrique Rapido
 
-Repo latihan untuk belajar workflow GitHub issue, branch, pull request, dan merge dengan perubahan kecil yang tetap bermakna.
+Henrique Rapido adalah game Type Race berbasis JavaScript vanilla untuk melatih kecepatan dan akurasi mengetik langsung di browser.
 
-## Purpose
+## Features
 
-Project ini dipakai untuk mempraktikkan alur kerja GitHub secara rapi:
+- Random typing prompt.
+- Real-time WPM, accuracy, progress, correct count, and incorrect count.
+- Character highlighting for correct, incorrect, current, and neutral characters.
+- Duration options: 30, 60, and 120 seconds.
+- Local high score saved in browser LocalStorage.
+- Paste prevention while a race is running.
+- Responsive layout for desktop and mobile.
 
-- Membuat issue dengan konteks yang jelas.
-- Membuat branch untuk setiap perubahan.
-- Mengirim pull request dengan deskripsi singkat.
-- Melakukan merge setelah perubahan siap.
+## Run Locally
 
-## Current Focus
+Open `index.html` directly in a modern browser.
 
-Fase awal project berfokus pada workflow dasar yang mendukung tiga achievement:
+No install, build, backend, or external dependency is required.
 
-- Quickdraw
-- Pull Shark
-- YOLO
+## Project Structure
 
-## Goals
+```text
+index.html
+styles/
+  main.css
+src/
+  texts.js
+  storage.js
+  app.js
+prd.md
+```
 
-- Menjaga setiap perubahan tetap kecil dan mudah direview.
-- Membiasakan penggunaan issue dan pull request untuk semua update.
-- Menyimpan contoh workflow yang bisa diulang tanpa membuat aktivitas spam.
+## Product Spec
+
+See `prd.md` for the full product requirements.

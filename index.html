@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Henrique Rapido | Type Race</title>
+    <link rel="stylesheet" href="styles/main.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">Type Race</p>
+          <h1>Henrique Rapido</h1>
+        </div>
+        <section class="high-score" aria-labelledby="high-score-title">
+          <h2 id="high-score-title">High Score</h2>
+          <p id="highScoreText">No score yet</p>
+        </section>
+      </header>
+
+      <main class="game-layout">
+        <section class="stats-grid" aria-label="Race stats">
+          <div class="stat">
+            <span class="stat-label">Time</span>
+            <strong id="timeValue">60s</strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">WPM</span>
+            <strong id="wpmValue">0</strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Accuracy</span>
+            <strong id="accuracyValue">100%</strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Progress</span>
+            <strong id="progressValue">0%</strong>
+          </div>
+        </section>
+
+        <section class="progress-wrap" aria-label="Race progress">
+          <div class="progress-track">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </section>
+
+        <section class="prompt-panel" aria-label="Text prompt">
+          <p id="promptDisplay" class="prompt-text"></p>
+        </section>
+
+        <section class="typing-panel">
+          <label for="typingInput" class="input-label">Typing input</label>
+          <textarea id="typingInput" rows="5" placeholder="Press Start to begin" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled></textarea>
+        </section>
+
+        <section class="controls" aria-label="Race controls">
+          <label class="duration-control" for="durationSelect">
+            <span>Duration</span>
+            <select id="durationSelect">
+              <option value="30">30s</option>
+              <option value="60" selected>60s</option>
+              <option value="120">120s</option>
+            </select>
+          </label>
+          <button id="startButton" type="button">Start</button>
+          <button id="restartButton" type="button" class="secondary">Restart</button>
+        </section>
+
+        <section id="resultPanel" class="result-panel" aria-live="polite" hidden>
+          <div>
+            <p class="eyebrow">Race Complete</p>
+            <h2 id="resultTitle">Race Complete</h2>
+            <p id="resultMessage">Review your result below.</p>
+          </div>
+          <dl class="result-grid">
+            <div>
+              <dt>WPM</dt>
+              <dd id="resultWpm">0</dd>
+            </div>
+            <div>
+              <dt>Accuracy</dt>
+              <dd id="resultAccuracy">100%</dd>
+            </div>
+            <div>
+              <dt>Correct</dt>
+              <dd id="resultCorrect">0</dd>
+            </div>
+            <div>
+              <dt>Incorrect</dt>
+              <dd id="resultIncorrect">0</dd>
+            </div>
+            <div>
+              <dt>Total Typed</dt>
+              <dd id="resultTotal">0</dd>
+            </div>
+            <div>
+              <dt>Duration</dt>
+              <dd id="resultDuration">60s</dd>
+            </div>
+          </dl>
+        </section>
+      </main>
+    </div>
+
+    <script src="src/texts.js" defer></script>
+    <script src="src/storage.js" defer></script>
+    <script src="src/app.js" defer></script>
+  </body>
+</html>
